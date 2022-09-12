@@ -3,8 +3,8 @@
 
 ##  - 資料讀取
   train資料有40,428,967筆，由於資料量過大，將資料切分多個區塊，並從每個區塊隨機抽取15%資料。
-<pre><code>
-  chunksize = 10 ** 6
+
+  <pre><code>chunksize = 10 ** 6
   num_of_chunk = 0
   train = pd.DataFrame()
     
@@ -15,5 +15,5 @@
     
   train.reset_index(inplace=True,drop=True)
 
-  train_len = len(train)
-</code></pre>
+  train_len = len(train)</code></pre>
+
