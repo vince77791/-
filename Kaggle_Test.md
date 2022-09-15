@@ -29,10 +29,7 @@ print('Submission:',submission.shape)</code></pre>
 <pre><code>train.info()</code></pre>
 ![image](https://user-images.githubusercontent.com/46454532/190408847-20fabdb1-1e53-4d52-8bc4-6147e8c4d73a.png)
 
-在討論區中，官方公布所有資料皆為類別型態
-![image](https://user-images.githubusercontent.com/46454532/190409317-9fcb41ea-80b9-4baf-a421-f904e02f4f06.png)
-
-將所有欄位轉為object，保留click為int
+在討論區中，官方公布所有資料皆為類別型態，故將所有欄位轉為object，保留click欄位為int型態
 <pre><code>train = train.astype(object)
 train['click']=train['click'].astype('int')
 
