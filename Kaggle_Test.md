@@ -2,7 +2,7 @@
 - Data source：https://www.kaggle.com/competitions/avazu-ctr-prediction/overview
 
 ##  - 資料讀取
-train資料有40,428,967筆，由於資料量過大，將資料切分多個區塊，並從每個區塊隨機抽取15%資料。
+train資料有40,428,967筆，由於資料量過大，將資料切分多個區塊，並從每個區塊隨機抽取20%資料。
 
 <pre><code>chunksize = 10 ** 6
 num_of_chunk = 0
@@ -10,7 +10,7 @@ train = pd.DataFrame()
 
 for chunk in pd.read_csv(path_root+'train.gz', chunksize=chunksize):
 num_of_chunk += 1
-train = pd.concat([train, chunk.sample(frac=.10, replace=False, random_state=1)], axis=0)
+train = pd.concat([train, chunk.sample(frac=.20, replace=False, random_state=1)], axis=0)
 print('Processing' + str(num_of_chunk))     
 
 train.reset_index(inplace=True,drop=True)
@@ -35,7 +35,7 @@ train['click']=train['click'].astype('int')
 
 test = test.astype(object)</code></pre>
 
-hour欄位為時間，本資料集train為10天資料，test為第11天資料，基本上hour欄應無意義，嘗試將hour轉為weekday(星期幾)與時段(第幾小時)
+hour欄位為時間，本資料集train為10天資料，test為第11天資料，基本上hour欄應無意義，將hour轉為weekday(星期幾)與period(第幾小時)
 
 將hour轉換為時段
 <pre><code>def transfer_period(h):
@@ -58,7 +58,11 @@ test['weekday'] = test.hour.apply(transfer_day_of_week)</code></pre>
 <pre><code>train.drop(['hour','id'],axis=1,inplace = True)
 test.drop(['hour','id'],axis=1,inplace = True)</code></pre>
 
-<pre><code></code></pre>
+確認各欄位類別數量
+<pre><code>train.describe(include='object').T</code></pre>
+![image](https://user-images.githubusercontent.com/46454532/190469970-88ff1e8a-1283-45cd-a5e3-d26f14c74fd4.png)
+
+
 <pre><code></code></pre>
 <pre><code></code></pre>
 <pre><code></code></pre>
