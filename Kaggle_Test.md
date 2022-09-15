@@ -62,7 +62,7 @@ test.drop(['hour','id'],axis=1,inplace = True)</code></pre>
 <pre><code>train.describe(include='object').T</code></pre>
 ![image](https://user-images.githubusercontent.com/46454532/190469970-88ff1e8a-1283-45cd-a5e3-d26f14c74fd4.png)
 
-將各欄位中的各類別再進行一次分類，依照各類別的平均點擊率來進行區分，分為12種類，平均點擊率為0的為第0類，平均點擊率為1的為第11類，其餘將剩餘的最高與最低切分為10等份，例如C1平均點擊率排除1與0後，最高為0.5，最低為0.1，將會以此兩數值均等切分成10等份，成為第1~10類。
+許多欄位類別數量過高，將各欄位中的各類別再進行一次分類，依照各類別的平均點擊率來進行區分，分為12種類，平均點擊率為0的為第0類，平均點擊率為1的為第11類，其餘將剩餘的最高與最低切分為10等份，例如C1平均點擊率排除1與0後，最高為0.5，最低為0.1，將會以此兩數值均等切分成10等份，成為第1~10類。
 test set的資料也會在此時轉換成新組別，若有類別是在train set未曾出現過的，將會保留為NaN。
 <pre><code>def group_column_with_click_mean(column_name,input_train_dt,input_test_dt):
   print(column_name)
@@ -86,8 +86,12 @@ test set的資料也會在此時轉換成新組別，若有類別是在train set
 need_to_be_transfer_list</code></pre>
 ![image](https://user-images.githubusercontent.com/46454532/190471756-18cf015d-2c49-4cfa-8bb9-0e5750628cd3.png)
 
+轉換各欄位成為新類別
 <pre><code>for column in need_to_be_transfer_list:
   train, test = group_column_with_click_mean(column,train,test)</code></pre>
+![image](https://user-images.githubusercontent.com/46454532/190526573-e496abf7-4429-4a52-9f75-5e29b6a071a9.png)
+![image](https://user-images.githubusercontent.com/46454532/190526633-76c93b16-b2f8-49ec-ae5e-01a055e9a07b.png)
+
 <pre><code></code></pre>
 <pre><code></code></pre>
 <pre><code></code></pre>
