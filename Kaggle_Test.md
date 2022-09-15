@@ -62,7 +62,33 @@ test.drop(['hour','id'],axis=1,inplace = True)</code></pre>
 <pre><code>train.describe(include='object').T</code></pre>
 ![image](https://user-images.githubusercontent.com/46454532/190469970-88ff1e8a-1283-45cd-a5e3-d26f14c74fd4.png)
 
+將各欄位中的各類別再進行一次分類，依照各類別的平均點擊率來進行區分，分為12種類，平均點擊率為0的為第0類，平均點擊率為1的為第11類，其餘將剩餘的最高與最低切分為10等份，例如C1平均點擊率排除1與0後，最高為0.5，最低為0.1，將會以此兩數值均等切分成10等份，成為第1~10類。
+test set的資料也會在此時轉換成新組別，若有類別是在train set未曾出現過的，將會保留為NaN。
+<pre><code>def group_column_with_click_mean(column_name,input_train_dt,input_test_dt):
+  print(column_name)
+  group_mean_dt = input_train_dt.groupby(column_name,as_index=False)['click'].mean()
+  group_mean_dt[column_name+"_group"]=0
+  group_mean_dt[column_name+"_group"], cut_bin =pd.cut(group_mean_dt[(group_mean_dt["click"]<1) & (group_mean_dt["click"]>0)]["click"], bins =10, labels = list(range(1,11)), retbins = True)
+  print(cut_bin)
+  group_mean_dt[column_name+"_group"]=group_mean_dt[column_name+"_group"].astype('str')
+  group_mean_dt.loc[group_mean_dt['click']==1,column_name+"_group"]=11
+  group_mean_dt.loc[group_mean_dt['click']==0,column_name+"_group"]=0
+  group_mean_dt[column_name+"_group"]=group_mean_dt[column_name+"_group"].astype('int')
+  group_mean_dt.drop(['click'],axis=1,inplace = True)
+  input_train_dt = input_train_dt.merge(group_mean_dt,on = column_name ,how = 'left')
+  input_test_dt = input_test_dt.merge(group_mean_dt,on = column_name ,how = 'left')
+  input_train_dt.drop([column_name],axis=1,inplace = True)
+  input_test_dt.drop([column_name],axis=1,inplace = True)
+  return input_train_dt, input_test_dt</code></pre>
+ 
+列出需要轉成新組別的欄位
+<pre><code>need_to_be_transfer_list=train.drop(["click"],axis=1).columns.to_list()
+need_to_be_transfer_list</code></pre>
+![image](https://user-images.githubusercontent.com/46454532/190471756-18cf015d-2c49-4cfa-8bb9-0e5750628cd3.png)
 
+<pre><code>for column in need_to_be_transfer_list:
+  train, test = group_column_with_click_mean(column,train,test)</code></pre>
+<pre><code></code></pre>
 <pre><code></code></pre>
 <pre><code></code></pre>
 <pre><code></code></pre>
