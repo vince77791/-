@@ -92,8 +92,12 @@ need_to_be_transfer_list</code></pre>
 ![image](https://user-images.githubusercontent.com/46454532/190526573-e496abf7-4429-4a52-9f75-5e29b6a071a9.png)
 ![image](https://user-images.githubusercontent.com/46454532/190526633-76c93b16-b2f8-49ec-ae5e-01a055e9a07b.png)
 
-<pre><code></code></pre>
-<pre><code></code></pre>
+轉換後的train
+![image](https://user-images.githubusercontent.com/46454532/190526822-4214bc73-7c8d-4271-950f-12281df8759a.png)
+
+轉換後的test
+![image](https://user-images.githubusercontent.com/46454532/190526851-200c8e77-88db-4940-8789-42b9595e9029.png)
+
 <pre><code></code></pre>
 <pre><code></code></pre>
   
