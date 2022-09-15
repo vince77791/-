@@ -27,5 +27,27 @@ train_len = len(train)</code></pre>
   看各欄位資料型態
   <pre><code>train.info()</code></pre>
 ![image](https://user-images.githubusercontent.com/46454532/190408847-20fabdb1-1e53-4d52-8bc4-6147e8c4d73a.png)
+  在討論區中，官方公布所有資料皆為類別型態
+![image](https://user-images.githubusercontent.com/46454532/190409317-9fcb41ea-80b9-4baf-a421-f904e02f4f06.png)
+  將所有欄位轉為object，保留click為int
+  <pre><code>train = train.astype(object)
+  train['click']=train['click'].astype('int')
+  
+  test = test.astype(object)</code></pre>
+  
+  先刪除hour與id欄位
+  <pre><code>train.drop(['hour','id'],axis=1,inplace = True)
+  test.drop(['hour','id'],axis=1,inplace = True)</code></pre>
+  
+  <pre><code></code></pre>
+  <pre><code></code></pre>
+  <pre><code></code></pre>
+  <pre><code></code></pre>
+  
+ 
+
+
+
+  
 
   
