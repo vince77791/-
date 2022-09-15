@@ -36,16 +36,17 @@ train['click']=train['click'].astype('int')
 test = test.astype(object)</code></pre>
 
 hour欄位為時間，本資料集train為10天資料，test為第11天資料，基本上hour欄應無意義，嘗試將hour轉為weekday(星期幾)與時段(第幾小時)
-<pre><code># 將hour轉換為時段
-def transfer_period(h):
+
+將hour轉換為時段
+<pre><code>def transfer_period(h):
     h = h[-2:]
     return int(h)
 
 train['period'] = train.hour.apply(transfer_period)
 test['period'] = test.hour.apply(transfer_period)</code></pre>
 
-<pre><code># 將hour轉換為星期幾
-def transfer_day_of_week(h):
+將hour轉換為星期幾
+<pre><code>def transfer_day_of_week(h):
   date_time_obj = datetime.strptime(h[:-2],'%y%m%d')
   return date_time_obj.weekday()
 
@@ -53,7 +54,7 @@ train['weekday'] = train.hour.apply(transfer_day_of_week)
 test['weekday'] = test.hour.apply(transfer_day_of_week)</code></pre>
 
 
-先刪除hour與id欄位
+刪除hour與id欄位
 <pre><code>train.drop(['hour','id'],axis=1,inplace = True)
 test.drop(['hour','id'],axis=1,inplace = True)</code></pre>
 
