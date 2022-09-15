@@ -1,5 +1,5 @@
 # -Click-Through Rate Prediction
-- source：https://www.kaggle.com/competitions/avazu-ctr-prediction/overview
+- Data source：https://www.kaggle.com/competitions/avazu-ctr-prediction/overview
 
 ##  - 資料讀取
 train資料有40,428,967筆，由於資料量過大，將資料切分多個區塊，並從每個區塊隨機抽取15%資料。
