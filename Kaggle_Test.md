@@ -217,3 +217,6 @@ plt.show()</code></pre>
 <pre><code>submission = pd.read_csv(path_root+"sampleSubmission.gz",index_col='id')
 submission[submission.columns[0]] = xg.predict_proba(test)[:,1]
 submission.to_csv(path_root+'submission.csv')</code></pre>
+
+於Kaggle提交分數為 0.40747
+![image](https://user-images.githubusercontent.com/46454532/190529364-5097ce80-303d-4fcc-ad5f-bebab14a3657.png)
