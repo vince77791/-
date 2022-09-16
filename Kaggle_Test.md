@@ -30,11 +30,13 @@ print('Submission:',submission.shape)</code></pre>
 <pre><code>train.info()</code></pre>
 ![image](https://user-images.githubusercontent.com/46454532/190408847-20fabdb1-1e53-4d52-8bc4-6147e8c4d73a.png)
 
-在討論區中，官方公布所有資料皆為類別型態，故將所有欄位轉為object，保留click欄位為int型態
+在討論區中，官方公布所有資料皆為類別型態，故將所有欄位轉為object，保留click欄位為int型態，hour轉為字串，以利後續轉換
 <pre><code>train = train.astype(object)
 train['click']=train['click'].astype('int')
+train['hour']=train['hour'].astype('string')
 
-test = test.astype(object)</code></pre>
+test = test.astype(object)
+test['hour']=test['hour'].astype('string')</code></pre>
 
 hour欄位為時間，將hour轉為weekday(星期幾)與period(第幾小時)
 
