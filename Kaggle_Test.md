@@ -1,5 +1,6 @@
 # -Click-Through Rate Prediction
 - Data source：https://www.kaggle.com/competitions/avazu-ctr-prediction/overview
+- Colab：https://colab.research.google.com/drive/1P9X9hZvHsFBf_yVv1MTZ95EONmRIoKTB?usp=sharing
 
 ##  - 資料讀取
 train資料有40,428,967筆，由於資料量過大，將資料切分多個區塊，並從每個區塊隨機抽取20%資料。
@@ -148,6 +149,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2,strati
 print("y_train:",Counter(y_train),"y_test:",Counter(y_test))</code></pre>
 ![image](https://user-images.githubusercontent.com/46454532/190527841-c2a43f09-e245-4862-8796-4526a5fe37cf.png)
 
+##  - 模型建立
 建立score function以利評估模型
 <pre><code>def score(m, x_train, y_train, x_test, y_test, train=True):
     if train:
