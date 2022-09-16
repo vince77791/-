@@ -3,7 +3,7 @@
 - Colab：https://colab.research.google.com/drive/1P9X9hZvHsFBf_yVv1MTZ95EONmRIoKTB?usp=sharing
 
 ##  - 資料讀取
-train資料有40,428,967筆，由於資料量過大，將資料切分多個區塊，並從每個區塊隨機抽取20%資料。
+訓練集資料有40,428,967筆，由於資料量過大，將資料切分多個區塊(每區塊100萬筆)，並從每個區塊隨機抽取20%資料。
 
 <pre><code>chunksize = 10 ** 6
 num_of_chunk = 0
@@ -36,7 +36,7 @@ train['click']=train['click'].astype('int')
 
 test = test.astype(object)</code></pre>
 
-hour欄位為時間，本資料集train為10天資料，test為第11天資料，基本上hour欄應無意義，將hour轉為weekday(星期幾)與period(第幾小時)
+hour欄位為時間，將hour轉為weekday(星期幾)與period(第幾小時)
 
 將hour轉換為時段
 <pre><code>def transfer_period(h):
@@ -63,8 +63,8 @@ test.drop(['hour','id'],axis=1,inplace = True)</code></pre>
 <pre><code>train.describe(include='object').T</code></pre>
 ![image](https://user-images.githubusercontent.com/46454532/190469970-88ff1e8a-1283-45cd-a5e3-d26f14c74fd4.png)
 
-許多欄位類別數量過高，將各欄位中的各類別再進行一次分類，依照各類別的平均點擊率來進行區分，分為12種類，平均點擊率為0的為第0類，平均點擊率為1的為第11類，其餘將剩餘的最高與最低切分為10等份，例如C1平均點擊率排除1與0後，最高為0.5，最低為0.1，將會以此兩數值均等切分成10等份，成為第1~10類。
-test set的資料也會在此時轉換成新組別，若有類別是在train set未曾出現過的，將會保留為NaN。
+許多欄位類別數量過高，將各欄位中的各類別再進行一次分類，依照各類別的平均點擊率來進行區分，分為12種類，平均點擊率為0的為第0類，平均點擊率為1的為第11類，剩餘的最高與最低切分為10等份，例如C1平均點擊率排除1與0後，最高值平均點擊率值為0.21125226，最低平均點擊率值為0.03066793，將會以此兩數值均等切分成10等份，成為第1~10類。
+測試集的資料也會在此時轉換成新組別，若有類別是在訓練集未曾出現過的，將會保留為NaN。
 <pre><code>def group_column_with_click_mean(column_name,input_train_dt,input_test_dt):
   print(column_name)
   group_mean_dt = input_train_dt.groupby(column_name,as_index=False)['click'].mean()
@@ -93,13 +93,13 @@ need_to_be_transfer_list</code></pre>
 ![image](https://user-images.githubusercontent.com/46454532/190526573-e496abf7-4429-4a52-9f75-5e29b6a071a9.png)
 ![image](https://user-images.githubusercontent.com/46454532/190526633-76c93b16-b2f8-49ec-ae5e-01a055e9a07b.png)
 
-轉換後的train
+轉換後的訓練集
 ![image](https://user-images.githubusercontent.com/46454532/190526822-4214bc73-7c8d-4271-950f-12281df8759a.png)
 
-轉換後的test
+轉換後的測試集
 ![image](https://user-images.githubusercontent.com/46454532/190526894-86acaaf7-1ebc-4889-8eca-ecfcf02546e1.png)
 
-觀察test NaN數量，也就是冷啟動的影響程度
+觀察測試集NaN數量，也就是冷啟動的影響程度
 <pre><code>test.isnull().sum()</code></pre>
 ![image](https://user-images.githubusercontent.com/46454532/190527011-8daec01f-e0c9-444f-a1ba-5119a77c15c3.png)
 
@@ -208,7 +208,7 @@ xg=xg.fit(X_train,y_train)
 score(xg, X_train, y_train, X_test, y_test, train=False)</code></pre>
 ![image](https://user-images.githubusercontent.com/46454532/190528952-863781a4-1aa6-4ee5-b050-44be26f55ef9.png)
 
-重要參數
+重要特徵
 <pre><code>from xgboost import plot_importance
 plot_importance(xg)
 plt.figure(figsize=(20, 15))
